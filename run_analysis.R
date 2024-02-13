@@ -2,7 +2,6 @@
 #Getting and Cleaning Data Course Project
 
 library(dplyr)
-library(reshape2)
 
 # Download the dataset
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
@@ -44,6 +43,6 @@ names(m1) <- gsub("\\.","_", names(m1))
 
 final <- m1 %>% 
   group_by(subject, activity) %>%
-  summarise_all(mean)
+  summarise_all(mean, na.rm=T)
 write.table(final, "FinalData.txt", row.name=FALSE)
 
