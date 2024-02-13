@@ -1,45 +1,68 @@
-The `run_analysis.R` script performs the data preparation and then followed by the 5 steps required as described in the course project’s definition.
+This code book describes `FinalData.txt` data.
 
-### 1. Download the dataset
-  Dataset downloaded and extracted under the folder called UCI HAR Dataset
+## Data description
+Dataset was downloaded from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
 
-### 2. Assign each data to variables
- -  `features <- features.txt` : 561 rows, 2 columns. The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ.
- -  `act_labels <- activity_labels.txt` : 6 rows, 2 columns. List of activities performed when the corresponding measurements were taken and its codes (labels)
- -  `subject_test <- test/subject_test.txt` : 2947 rows, 1 column.
-    contains test data of 9/30 volunteer test subjects being observed
- - `x_test <- test/X_test.txt` : 2947 rows, 561 columns.
-    contains recorded features test data
-  - `y_test <- test/y_test.txt` : 2947 rows, 1 columns.
-    contains test data of activities’code labels
-  - `subject_train <- test/subject_train.txt` : 7352 rows, 1 column.
-    contains train data of 21/30 volunteer subjects being observed
-  - `x_train <- test/X_train.txt` : 7352 rows, 561 columns.
-    contains recorded features train data
-  - `y_train <- test/y_train.txt` : 7352 rows, 1 columns.
-    contains train data of activities’code labels
+Human Activity Recognition Using Smartphones Dataset
+Version 1.0
 
-### 3. Merges the training and the test sets to create one data set
-  - X (10299 rows, 561 columns) is created by merging x_train and x_test using rbind() function
-  - Y (10299 rows, 1 column) is created by merging y_train and y_test using rbind() function
-  Subject (10299 rows, 1 column) is created by merging subject_train and subject_test using rbind() function
-  - m (10299 rows, 563 column) is created by merging Subject, Y and X using cbind() function
+Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
+Smartlab - Non Linear Complex Systems Laboratory
+DITEN - Universit? degli Studi di Genova.
+Via Opera Pia 11A, I-16145, Genoa, Italy.
+activityrecognition@smartlab.ws
+www.smartlab.ws
 
-### 4. Extracts only the measurements on the mean and standard deviation for each measurement
-  m1 (10299 rows, 88 columns) is created by subsetting m, selecting only columns: subject, code and the measurements on the mean and standard deviation (std) for each measurement
+### Subject and Activities (Rows)
+**Subject**
+: The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. It is described as numbers 1-30 in "subject" column in `FinalData.txt`.
 
-### 5. Uses descriptive activity names to name the activities in the data set
-  Entire numbers in code column of the m1 replaced with corresponding activity taken from second column of the activities variable
+**Activities**
+Each person, wearing a smartphone (Samsung Galaxy S II) on the waist, performed six activities as belows, which is allocated in "activity" column in `FinalData.txt`.
+- WALKING
+- WALKING_UPSTAIRS
+- WALKING_DOWNSTAIRS
+- SITTING
+- STANDING
+- LAYING
 
-### 6. Appropriately labels the data set with descriptive variable names
-  code column in m1 renamed into activities
-  All Acc in column’s name replaced by Accelerometer
-  All Gyro in column’s name replaced by Gyroscope
-  All BodyBody in column’s name replaced by Body
-  All Mag in column’s name replaced by Magnitude
-  All start with character f in column’s name replaced by Frequency
-  All start with character t in column’s name replaced by Time
+Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the *training data* and 30% the *test data*.
 
-### 7. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
-  m_group (180 rows, 88 columns) is created by sumarizing m1 taking the means of each variable for each activity and each subject, after groupped by subject and activity.
-  Export m_group into FinalData.txt file.
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
+
+
+### Variables (Columns)
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+- tBodyAcc-XYZ
+- tGravityAcc-XYZ
+- tBodyAccJerk-XYZ
+- tBodyGyro-XYZ
+- tBodyGyroJerk-XYZ
+- tBodyAccMag
+- tGravityAccMag
+- tBodyAccJerkMag
+- tBodyGyroMag
+- tBodyGyroJerkMag
+- fBodyAcc-XYZ
+- fBodyAccJerk-XYZ
+- fBodyGyro-XYZ
+- fBodyAccMag
+- fBodyAccJerkMag
+- fBodyGyroMag
+- fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+- mean: Mean value
+- std: Standard deviation
+
+### Calculation
+`FinalData.txt` contains the calculated mean of each variables for each subject and each activity.
